@@ -22,7 +22,12 @@
     </thead>
     <tbody>
       <tr v-for="(wine, idx) in wines" :key="idx">
-        <td>{{ wine['name'] }}</td>
+        <td>
+          <nuxt-link :to="`/wine/${wine['_id']['$oid']}`">
+            <img :src="wine.images[4].url" alt="" />
+            {{ wine['name'] }}</nuxt-link
+          >
+        </td>
         <td>{{ wine['main_producer']['name'] }}</td>
         <td>{{ wine['year'] }}</td>
         <td>{{ wine['main_country']['name'] }}</td>
@@ -79,5 +84,11 @@ export default {
   text-align: left;
   background-color: #4caf50;
   color: white;
+}
+
+td img {
+  height: 50px;
+  width: 50px;
+  object-fit: contain;
 }
 </style>
