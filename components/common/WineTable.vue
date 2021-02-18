@@ -1,7 +1,7 @@
 <template>
   <table class="wine-table">
     <thead>
-      <tr>
+      <tr @click="handleSort">
         <th>Wine Name</th>
         <th>Producer</th>
         <th data-sortable="true" data-field="year" data-filter-control="select">
@@ -12,8 +12,8 @@
         <th>Volume</th>
         <th data-sortable="true" data-field="price">Price</th>
         <th data-sortable="true" data-field="price_l">1L Price</th>
-        <!-- <th data-sortable="true" data-field="price_075">0.75L Price</th>
         <th data-sortable="true" data-field="ct">CT Score</th>
+        <!-- <th data-sortable="true" data-field="price_075">0.75L Price</th>
         <th data-sortable="true" data-field="bbs_l">BBS Score/Liter</th>
         <th data-sortable="true" data-field="bbs_a">BBS Score/Adjusted</th>
         <th data-field="store" data-filter-control="select">Store?</th>
@@ -21,7 +21,7 @@
       </tr>
     </thead>
     <tbody>
-      <tr v-for="(wine, idx) in wines" :key="idx">
+      <tr v-for="(wine, idx) in sortedWines" :key="idx">
         <td>
           <nuxt-link :to="`/wine/${wine['_id']['$oid']}`">
             <img :src="wine.images[4].url" alt="" />
@@ -35,8 +35,8 @@
         <td>{{ wine['volume']['value'] }}</td>
         <td>{{ format_price(wine['price']['value']) }}</td>
         <td>{{ format_price(wine['litrePrice']['value']) }}</td>
+        <td>{{ wine['ct']['score'] || 'N/A' }}</td>
         <!-- <td>{{ format_price(wine['price_adj']) }}</td>
-        <td>{{ wine['ct'].get('score', 'N/A') }}</td>
         <td>{{ wine['bbs'] }}</td>
         <td>{{ wine['bbs_adj'] }}</td>
         <td>{{ wine['availability']['storeAvailability']['available'] }}</td>
@@ -47,11 +47,23 @@
 </template>
 
 <script>
+import _ from 'lodash'
+
 export default {
   props: ['wines'],
+  computed: {
+    sortedWines() {
+      return _.sortBy(this.wines, [(w) => w.ct.score]).reverse()
+    },
+  },
+  mounted() {},
   methods: {
     format_price(amount) {
       return amount.toFixed(2)
+    },
+    handleSort(e) {
+      console.log(e.target)
+      console.log(e.currentTarget)
     },
   },
 }
