@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <div class="filters">
-      <search-bar />
+      <search-bar @searchInputChange="doSearch($event)" />
     </div>
     <wine-table :wines="wines"></wine-table>
   </div>
@@ -15,10 +15,26 @@ const getWines = () =>
 
 export default {
   components: { WineTable, SearchBar },
+  data() {
+    return {
+      wines: [],
+    }
+  },
   async asyncData({ req }) {
     const wines = await getWines()
 
-    return { wines }
+    return { wines, winesAll: wines }
+  },
+  methods: {
+    doSearch(searchTerm) {
+      if (searchTerm.length >= 3) {
+        this.wines = this.winesAll.filter((w) =>
+          w.name.toLowerCase().includes(searchTerm.toLowerCase())
+        )
+      } else {
+        this.wines = this.winesAll
+      }
+    },
   },
 }
 </script>

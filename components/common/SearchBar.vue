@@ -20,8 +20,7 @@ export default {
   },
   methods: {
     handleInput() {
-      if (this.searchTerm.length >= 3) {
-      }
+      this.$emit('searchInputChange', this.searchTerm)
     },
   },
 }
