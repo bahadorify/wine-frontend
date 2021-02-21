@@ -1,4 +1,5 @@
-# frontend
+# wine-frontend
+Frontend for WineCharts 🍷
 
 ## Build Setup
 
