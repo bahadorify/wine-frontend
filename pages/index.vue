@@ -24,12 +24,10 @@
 </template>
 
 <script>
+import _ from 'lodash'
+import { mapState } from 'vuex'
 import SearchBar from '~/components/common/SearchBar.vue'
 import WineTable from '~/components/common/WineTable.vue'
-import _ from 'lodash'
-
-const getWines = () =>
-  import('~/data/winery_dump.json').then((m) => m.default || m)
 
 export default {
   components: { WineTable, SearchBar },
@@ -40,13 +38,8 @@ export default {
       searchTerm: '',
     }
   },
-  async asyncData({ req }) {
-    const wines = await getWines()
-
-    const minYear = _.minBy(wines, (w) => w.year).year
-    const maxYear = _.maxBy(wines, (w) => w.year).year
-
-    return { wines, winesAll: wines, resultWines: wines, minYear, maxYear }
+  mounted() {
+    this.resultWines = this.wines
   },
   methods: {
     doSearch(searchTerm) {
@@ -64,8 +57,19 @@ export default {
     },
   },
   computed: {
+    ...mapState({
+      wines: 'wines',
+      // winesAll: 'wines',
+      // resultWines: 'wines',
+    }),
+    minYear() {
+      return _.minBy(this.wines, (w) => w.year).year
+    },
+    maxYear() {
+      return _.maxBy(this.wines, (w) => w.year).year
+    },
     filteredWines() {
-      return this.winesAll.filter((w) => w.year <= this.valueYear)
+      return this.wines.filter((w) => w.year <= this.valueYear)
     },
   },
 }

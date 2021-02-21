@@ -13,20 +13,20 @@
         <th data-sortable="true" data-field="price">Price</th>
         <th data-sortable="true" data-field="price_l">1L Price</th>
         <th data-sortable="true" data-field="ct">CT Score</th>
-        <!-- <th data-sortable="true" data-field="price_075">0.75L Price</th>
+        <th data-sortable="true" data-field="price_075">0.75L Price</th>
         <th data-sortable="true" data-field="bbs_l">BBS Score/Liter</th>
         <th data-sortable="true" data-field="bbs_a">BBS Score/Adjusted</th>
         <th data-field="store" data-filter-control="select">Store?</th>
-        <th data-field="home" data-filter-control="select">Home?</th> -->
+        <th data-field="home" data-filter-control="select">Home?</th>
       </tr>
     </thead>
     <tbody>
       <tr v-for="(wine, idx) in sortedWines" :key="idx">
         <td>
-          <nuxt-link :to="`/wine/${wine['_id']['$oid']}`">
-            <img :src="wine.images[4].url" alt="" />
-            {{ wine['name'] }}</nuxt-link
-          >
+          <!-- <nuxt-link :to="`/wine/${wine['_id']['$oid']}`"> -->
+          <img :src="wine.images[4].url" alt="" />
+          {{ wine['name'] }}
+          <!-- </nuxt-link> -->
         </td>
         <td>{{ wine['main_producer']['name'] }}</td>
         <td>{{ wine['year'] }}</td>
@@ -36,11 +36,11 @@
         <td>{{ format_price(wine['price']['value']) }}</td>
         <td>{{ format_price(wine['litrePrice']['value']) }}</td>
         <td>{{ wine['ct']['score'] || 'N/A' }}</td>
-        <!-- <td>{{ format_price(wine['price_adj']) }}</td>
+        <td>{{ format_price(wine['price_adj']) }}</td>
         <td>{{ wine['bbs'] }}</td>
         <td>{{ wine['bbs_adj'] }}</td>
         <td>{{ wine['availability']['storeAvailability']['available'] }}</td>
-        <td>{{ wine['availability']['deliveryAvailability']['available'] }}</td> -->
+        <td>{{ wine['availability']['deliveryAvailability']['available'] }}</td>
       </tr>
     </tbody>
   </table>

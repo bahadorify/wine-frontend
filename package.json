@@ -10,8 +10,10 @@
     "test": "jest"
   },
   "dependencies": {
+    "@nuxtjs/apollo": "^4.0.1-rc.5",
     "@nuxtjs/axios": "^5.12.5",
     "core-js": "^3.8.3",
+    "graphql-tag": "^2.11.0",
     "lodash": "^4.17.20",
     "nuxt": "^2.14.12",
     "nuxt-lazy-load": "^1.2.5"
